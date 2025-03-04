@@ -11,16 +11,15 @@ const port = 3000;
 app.use(cors())
 app.use(express.json());
 
-app.post('/', (req, res) => {
+
+app.post('/test', (req, res) => {
   const { message } = req.body; 
   res.json({ response: `Você enviou: ${message}` });
 });
 
 app.use('/auth', auth)
 app.use('/despesas', expenses)
-app.use('/test', (req, res) => {
-  res.json({ message: "Login funcionando!" });
-})
+
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => console.log('Conectado ao MongoDB'))
