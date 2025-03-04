@@ -12,6 +12,7 @@ app.use(cors())
 app.use(express.json());
 
 
+
 app.post('/test', (req, res) => {
   const { message } = req.body; 
   res.json({ response: `Você enviou: ${message}` });

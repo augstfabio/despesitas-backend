@@ -59,9 +59,22 @@ export const login = async (req, res) => {
 };
 export const me = async (req, res) => {
     try {
-        const user = req.user;
-        res.status(200).json(user);
+        const token = req.headers.authorization?.split(" ")[1];
+        if (!token) {
+            return res.status(401).json({ error: "Token não fornecido" });
+        }
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        const userData = {
+            id: decoded.id,
+            email: decoded.email,
+            name: decoded.name,
+        };
+        res.status(200).json(userData);
     } catch (err) {
+        if (err.name === "JsonWebTokenError" || err.name === "TokenExpiredError") {
+            return res.status(401).json({ error: "Token inválido ou expirado" });
+        }
+
         res.status(400).json({ error: err.message });
     }
-}
+};
