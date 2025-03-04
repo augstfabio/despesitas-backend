@@ -17,7 +17,7 @@ app.get('/', (req, res) => {
 app.use('/auth', auth)
 app.use('/despesas', expenses)
 mongoose
-  .connect(process.env.MONGO_URL)
+  .connect(process.env.MONGO_URI)
   .then(() => console.log('Conectado ao MongoDB'))
   .catch((err) => console.error('Erro ao conectar ao MongoDB:', err));
 
